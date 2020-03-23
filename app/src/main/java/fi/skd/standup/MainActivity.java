@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void setupTimer(long millis) {
-        updateTimer(time);
+        updateTimer(millis);
     }
 
     private void startActivityTimer() {
