@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setupTimer(activity);
         Intent intent = new Intent(this, TimerService.class);
         intent.putExtra("timer", time);
-        intent.putExtra("alarm", true);
+        intent.putExtra("alarm", false);
         startService(intent);
     }
 
