@@ -11,19 +11,15 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -33,13 +29,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private boolean vibration = true;
     private boolean timerIsRunning = false;
 
+    private long activity;
+    private long time;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupSharedPreferences();
         setupBroadcastReceiver();
-        //startTimer();
     }
 
     @Override
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void setupSharedPreferences() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         pref.registerOnSharedPreferenceChangeListener(this);
+        pref.edit().clear().commit();
         sound = pref.getBoolean(getString(R.string.pref_audio_key), true);
         vibration = pref.getBoolean(getString(R.string.pref_vibration_key), true);
         setupTimer(pref.getString(getString(R.string.pref_frequency_key), "60"));
@@ -84,28 +84,51 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .registerReceiver(new BroadcastReceiver() {
                                       @Override
                                       public void onReceive(Context context, Intent intent) {
-                                          finishTimer();
+                                          finishTimer(intent);
                                       }
                                   },
                         new IntentFilter("TimerFinish"));
     }
 
-    private long time;
-
     private void setupTimer(String minutes) {
         int min = Integer.parseInt(minutes);
         time = 1000 * 60 * min;
+        setupTimer(time);
+    }
+
+    private void setupTimer(long millis) {
         updateTimer(time);
     }
 
-
-    private void startTimer() {
+    private void startActivityTimer() {
+        setupTimer(activity);
         Intent intent = new Intent(this, TimerService.class);
         intent.putExtra("timer", time);
+        intent.putExtra("alarm", true);
         startService(intent);
     }
 
-    private void finishTimer() {
+    private void startAlarmTimer() {
+        Intent intent = new Intent(this, TimerService.class);
+        intent.putExtra("timer", time);
+        intent.putExtra("alarm", true);
+        startService(intent);
+    }
+
+    private void finishTimer(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            boolean alarm = bundle.getBoolean("alarm");
+            if (alarm) alarmUser();
+            else {
+                TextView textView = findViewById(R.id.alarm_text);
+                textView.setText("");
+                startAlarmTimer();
+            }
+        }
+    }
+
+    private void alarmUser() {
         TextView alarmText = findViewById(R.id.alarm_text);
         alarmText.setText("STAND UP LIKE YOUR LIFE DEPENDS ON IT!");
         if (vibration) {
@@ -117,12 +140,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         }
 
-        if(sound) {
+        if (sound) {
             mediaPlayer = MediaPlayer.create(this, R.raw.alarm);
             mediaPlayer.start();
         }
-
-        startTimer();
+        startActivityTimer();
     }
 
     private void updateTimer(long timeLeftInMillis) {
@@ -145,12 +167,20 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (key.equals(getString(R.string.pref_frequency_key))) {
             setupTimer(sharedPreferences.getString(key, "60"));
         }
+        if (key.equals(getString(R.string.pref_activity_key))) {
+            setActivity(sharedPreferences.getString(key, "5"));
+        }
     }
 
-    public void startTimer(View view) {
+    public void startAlarmTimer(View view) {
         if(!timerIsRunning) {
             timerIsRunning = true;
-            startTimer();
+            startAlarmTimer();
         }
+    }
+
+    private void setActivity(String minutes) {
+        int min = Integer.parseInt(minutes);
+        activity = 1000 * 60 * min;
     }
 }

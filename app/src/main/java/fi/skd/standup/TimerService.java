@@ -10,6 +10,8 @@ import android.os.IBinder;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class TimerService extends Service {
+    private boolean alarm = true;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -19,6 +21,7 @@ public class TimerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
+            alarm = bundle.getBoolean("alarm");
             startTimer(bundle.getLong("timer"));
         }
         return START_STICKY;
@@ -48,6 +51,7 @@ public class TimerService extends Service {
     private void broadCastFinish() {
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         Intent intent = new Intent("TimerFinish");
+        intent.putExtra("alarm", alarm);
         manager.sendBroadcast(intent);
     }
 }
