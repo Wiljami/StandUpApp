@@ -6,6 +6,18 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/alarm_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:gravity="center_horizontal" />
+
+    <TextView
         android:id="@+id/text_view_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,5 +25,15 @@
         android:layout_centerVertical="true"
         android:text="00:00"
         android:textSize="60sp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start StandUp App"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:onClick="startTimer"
         />
 </RelativeLayout>

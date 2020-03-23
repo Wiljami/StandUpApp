@@ -2,6 +2,7 @@ package fi.skd.standup;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
@@ -32,6 +33,7 @@ public class TimerService extends Service {
 
             @Override
             public void onFinish() {
+                broadCastFinish();
             }
         }.start();
     }
@@ -40,6 +42,12 @@ public class TimerService extends Service {
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         Intent intent = new Intent("TimerBroadcast");
         intent.putExtra("timeLeftInMillis", timeLeftInMillis);
+        manager.sendBroadcast(intent);
+    }
+
+    private void broadCastFinish() {
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+        Intent intent = new Intent("TimerFinish");
         manager.sendBroadcast(intent);
     }
 }
