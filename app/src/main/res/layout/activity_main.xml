@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Schedule Manager"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        android:onClick="openScheduler" />
+
     <TextView
         android:id="@+id/alarm_text"
         android:layout_width="wrap_content"

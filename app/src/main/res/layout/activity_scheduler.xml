@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SchedulerActivity">
+
+    <TextView
+        android:id="@+id/alarm_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is the schedule manager"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:gravity="center_horizontal" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/schedule_table"
+        android:padding="20dp"
+        android:layout_alignParentStart="true">
+        <TableRow>
+            <CheckBox android:id="@+id/monday_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday"
+                android:onClick="onWeekDayCheckBoxClicked" />
+        </TableRow>
+        <TableRow>
+            <CheckBox android:id="@+id/tuesday_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday"
+                android:onClick="onWeekDayCheckBoxClicked" />
+        </TableRow>
+        <TableRow>
+            <CheckBox android:id="@+id/wednesday_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday"
+                android:onClick="onWeekDayCheckBoxClicked" />
+        </TableRow>
+        <TableRow>
+            <CheckBox android:id="@+id/thursday_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thursday"
+                android:onClick="onWeekDayCheckBoxClicked" />
+        </TableRow>
+        <TableRow>
+            <CheckBox android:id="@+id/friday_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Friday"
+                android:onClick="onWeekDayCheckBoxClicked" />
+        </TableRow>
+        <TableRow>
+            <CheckBox android:id="@+id/saturday_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saturday"
+                android:onClick="onWeekDayCheckBoxClicked" />
+        </TableRow>
+        <TableRow>
+            <CheckBox android:id="@+id/sunday_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunday"
+                android:onClick="onWeekDayCheckBoxClicked" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

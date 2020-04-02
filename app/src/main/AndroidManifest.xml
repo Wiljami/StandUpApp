@@ -25,6 +25,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
+        <activity android:name=".SchedulerActivity"/>
         <service android:name=".TimerService"/>
     </application>
     <uses-permission android:name="android.permission.VIBRATE"/>

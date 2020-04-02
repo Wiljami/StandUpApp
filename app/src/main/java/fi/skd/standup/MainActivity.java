@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
         }
@@ -182,5 +182,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void setActivity(String minutes) {
         int min = Integer.parseInt(minutes);
         activity = 1000 * 60 * min;
+    }
+
+    public void openScheduler(View view) {
+        Intent intent = new Intent(this, SchedulerActivity.class);
+        startActivity(intent);
     }
 }
